@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 
 app.get("/users/:page", eAdmin, async (req, res) => {
   const { page = 1 } = req.params;
-  const limit = 40;
+  const limit = 7;
   let lastPage = 1;
 
   const countUser = await User.count();
