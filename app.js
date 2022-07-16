@@ -13,6 +13,9 @@ const path = require('path');
 const { eAdmin } = require("./middlewares/auth");
 const User = require("./models/User");
 const upload = require("./middlewares/uploadImgProfile");
+const Fabricante = require("./models/Fabricante");
+const Modelo = require("./models/Modelo");
+const Veiculo = require("./models/Veiculo");
 
 const app = express();
 
@@ -749,6 +752,167 @@ app.put("/edit-user-image/:id", eAdmin, upload.single("image"), async (req, res)
 }
   }
 );
+//#######################Fim do módulo User #################################
+
+
+//#######################Início do módulo Fabricante #########################
+app.post("/fabricante", eAdmin, async (req, res) => {
+  var dados = req.body;
+
+  const schema = yup.object().shape({   
+    
+    nome_fabricante: yup
+      .string("Erro: Necessário preencher o campo nome do fabricante!")
+      .required("Erro: Necessário preencher o campo nome do fabricante!"),
+  });
+
+  try {
+    await schema.validate(dados);
+  } catch (err) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: err.errors,
+    });
+  }  
+
+  const fabricante = await Fabricante.findOne({
+    where: {
+      nome_fabricante: req.body.nome_fabricante,
+    },
+  });
+
+  if (fabricante) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: "Erro: Este fabricante já está cadastrado!",
+    });
+  }  
+
+  await Fabricante.create(dados)
+    .then(() => {
+      return res.json({
+        erro: false,
+        mensagem: "Fabricante cadastrado com sucesso!",
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Fabricante não cadastrado com sucesso!",
+      });
+    });
+});
+//#######################Fim do módulo Fabricante ############################
+
+//#######################Início do módulo Modelo #########################
+app.post("/modelo", eAdmin, async (req, res) => {
+  var dados = req.body;
+
+  const schema = yup.object().shape({   
+    
+    nome_modelo: yup
+      .string("Erro: Necessário preencher o campo nome do modelo!")
+      .required("Erro: Necessário preencher o campo nome do modelo!"),
+  });
+
+  try {
+    await schema.validate(dados);
+  } catch (err) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: err.errors,
+    });
+  }  
+
+  const modelo = await Modelo.findOne({
+    where: {
+      nome_modelo: req.body.nome_modelo,
+    },
+  });
+
+  if (modelo) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: "Erro: Este modelo já está cadastrado!",
+    });
+  }  
+
+  await Modelo.create(dados)
+    .then(() => {
+      return res.json({
+        erro: false,
+        mensagem: "Modelo cadastrado com sucesso!",
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Modelo não cadastrado com sucesso!",
+      });
+    });
+});
+//#######################Fim do módulo Modelo ############################
+
+//#######################Início do módulo Veiculo #########################
+app.post("/veiculo", eAdmin, async (req, res) => {
+  var dados = req.body;
+
+  const schema = yup.object().shape({   
+    
+    placa: yup
+      .string("Erro: Necessário preencher o campo placa!")
+      .required("Erro: Necessário preencher o campo placa!"),
+    renavam: yup
+      .string("Erro: Necessário preencher o campo renavam!")
+      .required("Erro: Necessário preencher o campo renavam!"),
+    ano_fabricacao: yup
+      .string("Erro: Necessário preencher o campo ano de fabricação!")
+      .required("Erro: Necessário preencher o campo ano de fabricação!"),
+    fabricante_id: yup
+      .string("Erro: Necessário preencher o campo nome do fabricante!")
+      .required("Erro: Necessário preencher o campo nome do fabricante!"),
+    modelo_id: yup
+      .string("Erro: Necessário preencher o campo modelo do fabricante!")
+      .required("Erro: Necessário preencher o campo modelo do fabricante!"),
+  });
+
+  try {
+    await schema.validate(dados);
+  } catch (err) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: err.errors,
+    });
+  }  
+
+  const veiculo = await Veiculo.findOne({
+    where: {
+      placa: req.body.placa,
+    },
+  });
+
+  if (veiculo) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: "Erro: Este veículo já está cadastrado!",
+    });
+  }  
+
+  await Veiculo.create(dados)
+    .then(() => {
+      return res.json({
+        erro: false,
+        mensagem: "Veículo cadastrado com sucesso!",
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Veículo não cadastrado com sucesso!",
+      });
+    });
+});
+//#######################Fim do módulo Veiculo ############################
 
 app.listen(8080, () => {
   console.log("Servidor iniciado na porta 8080: http://localhost:8080");
