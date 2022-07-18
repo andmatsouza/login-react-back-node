@@ -802,6 +802,43 @@ app.post("/fabricante", eAdmin, async (req, res) => {
       });
     });
 });
+
+app.get("/fabricantes/:page", eAdmin, async (req, res) => {
+  const { page = 1 } = req.params;
+  const limit = 7;
+  let lastPage = 1;
+
+  const countFabricante = await Fabricante.count();
+  if (countFabricante === null) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: "Erro: Nenhum fabricante encontrado!",
+    });
+  } else {
+    lastPage = Math.ceil(countFabricante / limit);
+  }
+
+  await Fabricante.findAll({
+    attributes: ["id", "nome_fabricante"],
+    order: [["id", "DESC"]],
+    offset: Number(page * limit - limit),
+    limit: limit,
+  })
+    .then((fabricantes) => {
+      return res.json({
+        erro: false,
+        fabricantes,
+        countFabricante,
+        lastPage,
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Nenhum fabricante encontrado!",
+      });
+    });
+});
 //#######################Fim do módulo Fabricante ############################
 
 //#######################Início do módulo Modelo #########################
