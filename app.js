@@ -839,6 +839,74 @@ app.get("/fabricantes/:page", eAdmin, async (req, res) => {
       });
     });
 });
+
+app.get("/fabricante/:id", eAdmin, async (req, res) => {
+  const { id } = req.params;
+
+  await Fabricante.findByPk(id)
+    .then((fabricante) => {       
+      return res.json({
+        erro: false,
+        fabricante: fabricante        
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Nenhum fabricante encontrado!",
+      });
+    });
+});
+
+app.put("/fabricante", eAdmin, async (req, res) => {
+  const { id } = req.body;
+  const dados = req.body;
+
+  const schema = yup.object().shape({   
+    nome_fabricante: yup
+      .string("Erro: Necessário preencher o campo nome do fabricante!")
+      .required("Erro: Necessário preencher o campo nome do fabricante!"),
+  });
+
+  try {
+    await schema.validate(dados);
+  } catch (err) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: err.errors,
+    });
+  } 
+
+  const fabricante = await Fabricante.findOne({
+    where: {
+      nome_fabricante: req.body.nome_fabricante,
+      id: {
+        [Op.ne]: id,
+      },
+    },
+  });
+
+  if (fabricante) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: "Erro: Este fabricante já está cadastrado!",
+    });
+  }
+
+  await Fabricante.update(dados, { where: { id } })
+    .then(() => {
+      return res.json({
+        erro: false,
+        mensagem: "Fabricante editado com sucesso!",
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Fabricante não editado com sucesso!",
+      });
+    });
+});
 //#######################Fim do módulo Fabricante ############################
 
 //#######################Início do módulo Modelo #########################
