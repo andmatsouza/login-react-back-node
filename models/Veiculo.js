@@ -37,8 +37,8 @@ const Veiculo = db.define('veiculos', {
 });
 
 //Aula.belongsTo(Modulo);
-Veiculo.hasOne(Fabricante);
-Veiculo.hasOne(Modelo);
+//Veiculo.hasOne(Fabricante);
+//Veiculo.hasOne(Modelo);
 
 //Veiculo.sync();
 //Veiculo.sync({ alter: true });
