@@ -12,7 +12,7 @@ const Modelo = db.define('modelos', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  fabricante_id: {
+  fabricanteId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
