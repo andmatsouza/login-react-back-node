@@ -843,7 +843,7 @@ app.get("/fabricantes/:page", eAdmin, async (req, res) => {
 app.get("/fabricante/:id", eAdmin, async (req, res) => {
   const { id } = req.params;
 
-  await Fabricante.findByPk(id)
+  await Fabricante.findByPk(id, {include: [{model: Modelo}] })
     .then((fabricante) => {       
       return res.json({
         erro: false,
@@ -956,6 +956,41 @@ app.post("/modelo", eAdmin, async (req, res) => {
       });
     });
 });
+
+app.get("/modelos/:page", eAdmin, async (req, res) => {
+  const { page = 1 } = req.params;
+  const limit = 7;
+  let lastPage = 1;
+
+  const countModelo = await Modelo.count();
+  if (countModelo === null) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: "Erro: Nenhum modelo encontrado!",
+    });
+  } else {
+    lastPage = Math.ceil(countModelo / limit);
+  }
+
+  await Modelo.findAll({
+    
+    include: Fabricante
+  })
+    .then((modelos) => {
+      return res.json({
+        erro: false,
+        modelos,
+        countModelo,
+        lastPage,
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Nenhum modelo encontrado!",
+      });
+    });
+});
 //#######################Fim do módulo Modelo ############################
 
 //#######################Início do módulo Veiculo #########################
@@ -973,10 +1008,10 @@ app.post("/veiculo", eAdmin, async (req, res) => {
     ano_fabricacao: yup
       .string("Erro: Necessário preencher o campo ano de fabricação!")
       .required("Erro: Necessário preencher o campo ano de fabricação!"),
-    fabricante_id: yup
+    fabricanteId: yup
       .string("Erro: Necessário preencher o campo nome do fabricante!")
       .required("Erro: Necessário preencher o campo nome do fabricante!"),
-    modelo_id: yup
+    modeloId: yup
       .string("Erro: Necessário preencher o campo modelo do fabricante!")
       .required("Erro: Necessário preencher o campo modelo do fabricante!"),
   });
@@ -1014,6 +1049,42 @@ app.post("/veiculo", eAdmin, async (req, res) => {
       return res.status(400).json({
         erro: true,
         mensagem: "Erro: Veículo não cadastrado com sucesso!",
+      });
+    });
+});
+
+app.get("/veiculos/:page", eAdmin, async (req, res) => {
+  const { page = 1 } = req.params;
+  const limit = 7;
+  let lastPage = 1;
+
+  const countVeiculo = await Veiculo.count();
+  if (countVeiculo === null) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: "Erro: Nenhum veículo encontrado!",
+    });
+  } else {
+    lastPage = Math.ceil(countVeiculo / limit);
+  }
+
+  await Veiculo.findAll({    
+    
+    include: [{ model:Fabricante}, { model: Modelo}]
+    
+  })
+    .then((veiculos) => {
+      return res.json({
+        erro: false,
+        veiculos,
+        countVeiculo,
+        lastPage,
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Nenhum veículo encontrado!",
       });
     });
 });
