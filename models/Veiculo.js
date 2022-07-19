@@ -26,19 +26,21 @@ const Veiculo = db.define('veiculos', {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  fabricante_id: {
+  fabricanteId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  modelo_id: {
+  modeloId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
 });
 
-//Aula.belongsTo(Modulo);
-//Veiculo.hasOne(Fabricante);
-//Veiculo.hasOne(Modelo);
+Fabricante.hasOne(Veiculo);
+Veiculo.belongsTo(Fabricante);
+
+Modelo.hasOne(Veiculo);
+Veiculo.belongsTo(Modelo);
 
 //Veiculo.sync();
 //Veiculo.sync({ alter: true });
