@@ -17,10 +17,10 @@ const Fabricante = db.define('fabricantes', {
 
 Fabricante.hasMany(Modelo, {
   constraints: true,
-  foreignKey: 'fabricante_id'
+  foreignKey: 'fabricanteId'
 });
 
-//Modulo.belongsTo(Curso);
+Modelo.belongsTo(Fabricante);
 
 //Fabricante.sync();
 //Fabricante.sync({ alter: true });
