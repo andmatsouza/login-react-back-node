@@ -87,7 +87,7 @@ async function getFabricantes(req, res) {
 async function getFabricante(req, res) {
   const { id } = req.params;
 
-  await repository.findByPk(id)
+  await repository.findById(id)
     .then((fabricante) => {       
       return res.json({
         erro: false,

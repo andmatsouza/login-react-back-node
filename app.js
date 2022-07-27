@@ -10,6 +10,7 @@ var cors = require("cors");
 const path = require('path');
 const userRouter = require('./src/routes/user');
 const fabricanteRouter = require('./src/routes/fabricante');
+const modeloRouter = require('./src/routes/modelo');
 
 const app = express();
 
@@ -28,7 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use([userRouter,fabricanteRouter]);
+app.use([userRouter,fabricanteRouter,modeloRouter]);
 
 
 
