@@ -1,16 +1,10 @@
 const express = require("express");
 var cors = require("cors");
-//const yup = require("yup");
-//const nodemailer = require("nodemailer");
-//const { Op } = require("sequelize");
-//const bcrypt = require("bcryptjs");
-//const jwt = require("jsonwebtoken");
-//require("dotenv").config();
-//const fs = require('fs');
 const path = require('path');
 const userRouter = require('./src/routes/user');
 const fabricanteRouter = require('./src/routes/fabricante');
 const modeloRouter = require('./src/routes/modelo');
+const veiculoRouter = require('./src/routes/veiculo');
 
 const app = express();
 
@@ -29,7 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use([userRouter,fabricanteRouter,modeloRouter]);
+app.use([userRouter,fabricanteRouter,modeloRouter,veiculoRouter]);
 
 
 
