@@ -7,6 +7,7 @@ const modeloRouter = require('./src/routes/modelo');
 const veiculoRouter = require('./src/routes/veiculo');
 const postoRouter = require('./src/routes/posto');
 const combustivelRouter = require('./src/routes/combustivel');
+const abastecimentoRouter = require('./src/routes/abastecimento');
 
 const app = express();
 
@@ -25,7 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use([userRouter,fabricanteRouter,modeloRouter,veiculoRouter, postoRouter, combustivelRouter]);
+app.use([userRouter,fabricanteRouter,modeloRouter,veiculoRouter, postoRouter, combustivelRouter,abastecimentoRouter]);
 
 
 
