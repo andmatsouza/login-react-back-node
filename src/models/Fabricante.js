@@ -16,6 +16,7 @@ const Fabricante = db.define('fabricantes', {
   status: {
     type: DataTypes.INTEGER,
     allowNull: true,
+    defaultValue: 1 
   }
 });
 
