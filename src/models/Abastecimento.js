@@ -30,17 +30,21 @@ const Abastecimento = db.define('abastecimentos', {
   status: {
     type: DataTypes.INTEGER,
     allowNull: true,
-  }
+  },
+  veiculoId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 });
-
-Veiculo.hasOne(Abastecimento);
-Abastecimento.belongsTo(Veiculo);
 
 Posto.hasOne(Abastecimento);
 Abastecimento.belongsTo(Posto);
 
 Combustivel.hasOne(Abastecimento);
 Abastecimento.belongsTo(Combustivel);
+
+//Veiculo.hasOne(Abastecimento);
+//Abastecimento.belongsTo(Veiculo);
 
 //Abastecimento.sync();
 //Abastecimento.sync({ alter: true });

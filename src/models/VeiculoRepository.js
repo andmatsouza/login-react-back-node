@@ -2,6 +2,9 @@ const { Op } = require("sequelize");
 const Veiculo = require("./Veiculo");
 const Modelo = require("./Modelo");
 const Fabricante = require("./Fabricante");
+const Abastecimeto = require("./Abastecimento");
+const Posto = require("./Posto");
+const Combustivel = require("./Combustivel");
 
 function countVeiculo() { return Veiculo.count(); };
 
@@ -17,7 +20,8 @@ function findAll() {
 };
 
 function findById(id) {
-  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}] });
+  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}] }); 
+  //return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto}] });  
 }
 
 function findOneVeiculoId(id) {
