@@ -7,6 +7,7 @@ const router = Router();
 
 router.post("/veiculo", eAdmin, veiculoController.AddVeiculo);
 router.get("/veiculos/:page", eAdmin, veiculoController.getVeiculos);
-router.put("/veiculo/:id", eAdmin, veiculoController.settVeiculoId); 
+router.get("/veiculo/:id", eAdmin, veiculoController.getVeiculo);
+router.put("/veiculo/:id", eAdmin, veiculoController.setVeiculoId); 
 
 module.exports = router;

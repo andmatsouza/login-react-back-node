@@ -16,6 +16,10 @@ function findAll() {
   })
 };
 
+function findById(id) {
+  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}] });
+}
+
 function findOneVeiculoId(id) {
   return Veiculo.findOne({ where: {id: id}});
 }
@@ -40,4 +44,4 @@ function remove(id) {
   return Modelo.destroy({ where: { id } });   
 }*/
 
-module.exports = {countVeiculo, findAll, findOneVeiculoId, findOneVeiculo, add,};
+module.exports = {countVeiculo, findAll, findById, findOneVeiculoId, findOneVeiculo, add,};

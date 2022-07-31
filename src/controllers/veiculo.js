@@ -89,7 +89,25 @@ async function getVeiculos(req, res) {
     });
 };
 
-async function settVeiculoId(req, res) {
+async function getVeiculo(req, res) {
+  const { id } = req.params;
+
+  await repository.findById(id)
+    .then((veiculo) => {       
+      return res.json({
+        erro: false,
+        veiculo: veiculo        
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Nenhum veículo encontrado!",
+      });
+    });
+};
+
+async function setVeiculoId(req, res) {
   const { id } = req.params;
 
   const veiculo = await repository.findOneVeiculoId(id);
@@ -113,5 +131,6 @@ async function settVeiculoId(req, res) {
 
 module.exports = {AddVeiculo,
                   getVeiculos,
-                  settVeiculoId,                 
+                  getVeiculo,
+                  setVeiculoId,                 
                   };
