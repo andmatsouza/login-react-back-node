@@ -20,9 +20,11 @@ function findAll() {
 };
 
 function findById(id) {
-  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}] }); 
+  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}], order: [[Abastecimeto, 'data_abastecimento', 'DESC']]  }); 
   //return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto}] });  
 }
+
+
 
 function findOneVeiculoId(id) {
   return Veiculo.findOne({ where: {id: id}});
