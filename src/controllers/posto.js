@@ -52,39 +52,39 @@ async function AddPosto(req, res) {
     });
 };
 
-/*async function getFabricantes(req, res) {
+async function getPostos(req, res) {
   const { page = 1 } = req.params;
   const limit = 7;
   let lastPage = 1;
 
-  const countFabricante = await repository.countFabricante();
-  if (countFabricante === null) {
+  const countPosto = await repository.countPosto();
+  if (countPosto === null) {
     return res.status(400).json({
       erro: true,
-      mensagem: "Erro: Nenhum fabricante encontrado!",
+      mensagem: "Erro: Nenhum posto encontrado!",
     });
   } else {
-    lastPage = Math.ceil(countFabricante / limit);
+    lastPage = Math.ceil(countPosto / limit);
   }
 
   await repository.findAll(page)
-    .then((fabricantes) => {
+    .then((postos) => {
       return res.json({
         erro: false,
-        fabricantes,
-        countFabricante,
+        postos,
+        countPosto,
         lastPage,
       });
     })
     .catch(() => {
       return res.status(400).json({
         erro: true,
-        mensagem: "Erro: Nenhum fabricante encontrado!",
+        mensagem: "Erro: Nenhum posto encontrado!",
       });
     });
 };
 
-async function getFabricante(req, res) {
+/*async function getFabricante(req, res) {
   const { id } = req.params;
 
   await repository.findById(id)
@@ -169,4 +169,5 @@ async function setFabricanteId(req, res) {
 };*/
 
 module.exports = {AddPosto,
+                  getPostos
                   };
