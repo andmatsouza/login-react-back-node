@@ -2,24 +2,20 @@ const { Op } = require("sequelize");
 const Combustivel = require("./Combustivel");
 //const Modelo = require("./Modelo");
 
-//function countPosto() { return Posto.count(); };
+function countCombustivel() { return Combustivel.count(); };
 
-/*function findAll(pages) {
-  const { page = 1 } = pages;
-  const limit = 7;  
+function findAll() {  
 
-  return Posto.findAll({
+  return Combustivel.findAll({
     where: {
       status: '1'      
   },
-    attributes: ["id", "nome_posto"],
-    order: [["id", "DESC"]],
-    offset: Number(page * limit - limit),
-    limit: limit,
+    attributes: ["id", "nome_combustivel"],
+    order: [["id", "DESC"]],    
   }) 
 };
 
-function findById(id) {
+/*function findById(id) {
   return Fabricante.findByPk(id, {include: [{model: Modelo}] });
 }
 
@@ -54,4 +50,4 @@ function remove(id) {
 
 
 
-module.exports = {findOneCombustivel, add};
+module.exports = {countCombustivel, findOneCombustivel, findAll, add};

@@ -52,39 +52,34 @@ async function AddCombustivel(req, res) {
     });
 };
 
-/*async function getFabricantes(req, res) {
-  const { page = 1 } = req.params;
-  const limit = 7;
-  let lastPage = 1;
+async function getCombustiveis(req, res) {
+  
 
-  const countFabricante = await repository.countFabricante();
-  if (countFabricante === null) {
+  const countCombustivel = await repository.countCombustivel();
+  if (countCombustivel === null) {
     return res.status(400).json({
       erro: true,
-      mensagem: "Erro: Nenhum fabricante encontrado!",
+      mensagem: "Erro: Nenhum combustível encontrado!",
     });
-  } else {
-    lastPage = Math.ceil(countFabricante / limit);
   }
 
-  await repository.findAll(page)
-    .then((fabricantes) => {
+  await repository.findAll()
+    .then((combustiveis) => {
       return res.json({
         erro: false,
-        fabricantes,
-        countFabricante,
-        lastPage,
+        combustiveis,
+        countCombustivel        
       });
     })
     .catch(() => {
       return res.status(400).json({
         erro: true,
-        mensagem: "Erro: Nenhum fabricante encontrado!",
+        mensagem: "Erro: Nenhum combustível encontrado!",
       });
     });
 };
 
-async function getFabricante(req, res) {
+/*async function getFabricante(req, res) {
   const { id } = req.params;
 
   await repository.findById(id)
@@ -168,5 +163,6 @@ async function setFabricanteId(req, res) {
     });
 };*/
 
-module.exports = {AddCombustivel,
+module.exports = {AddCombustivel, 
+                  getCombustiveis
                   };
