@@ -33,8 +33,8 @@ async function AddAbastecimento(req, res) {
       .string("Erro: Necessário preencher o campo posto!")
       .required("Erro: Necessário preencher o campo posto!"),
     combustiveiId: yup
-      .string("Erro: Necessário preencher o campo combustível!")
-      .required("Erro: Necessário preencher o campo combustível!"),
+      .string("Erro: Necessário preencher o campo combustível2!")
+      .required("Erro: Necessário preencher o campo combustível2!"),
   });
 
   try {
