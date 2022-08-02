@@ -4,7 +4,7 @@ const Posto = require("./Posto");
 
 function countPosto() { return Posto.count(); };
 
-/*function findAll(pages) {
+function findAll(pages) {
   const { page = 1 } = pages;
   const limit = 7;  
 
@@ -19,7 +19,7 @@ function countPosto() { return Posto.count(); };
   }) 
 };
 
-function findById(id) {
+/*function findById(id) {
   return Fabricante.findByPk(id, {include: [{model: Modelo}] });
 }
 
@@ -54,4 +54,4 @@ function remove(id) {
 
 
 
-module.exports = {countPosto, findOnePosto, add};
+module.exports = {countPosto, findAll, findOnePosto, add};
