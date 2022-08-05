@@ -19,8 +19,29 @@ function findAll() {
   })
 };
 
-function findById(id) {
-  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}], order: [[Abastecimeto, 'data_abastecimento', 'DESC']]  }); 
+function findById(id,primeiroDia,ultimoDia) {
+
+  return Veiculo.findByPk(id, {
+    include: [ 
+      {model:Fabricante}, 
+      {model: Modelo}, 
+      {model: Abastecimeto,  
+        where: {"data_abastecimento": {[Op.between]: [primeiroDia, ultimoDia]}}, include: [Posto, Combustivel]
+      }
+      ],
+      
+      order: [[Abastecimeto, 'data_abastecimento', 'DESC']]  
+  
+  }); 
+
+
+  //return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}], order: [[Abastecimeto, 'data_abastecimento', 'DESC']]  });
+  //return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto}] });  
+}
+
+function findById1(id) {
+
+  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}], order: [[Abastecimeto, 'data_abastecimento', 'DESC']]  });
   //return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto}] });  
 }
 
@@ -50,4 +71,4 @@ function remove(id) {
   return Modelo.destroy({ where: { id } });   
 }*/
 
-module.exports = {countVeiculo, findAll, findById, findOneVeiculoId, findOneVeiculo, add,};
+module.exports = {countVeiculo, findAll, findById,findById1, findOneVeiculoId, findOneVeiculo, add,};

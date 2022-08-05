@@ -90,9 +90,39 @@ async function getVeiculos(req, res) {
 };
 
 async function getVeiculo(req, res) {
-  const { id } = req.params;
+  const { id, mes, ano } = req.params;
 
-  await repository.findById(id)
+  const date = new Date(ano + "-" + mes);
+   // console.log("Data: " + date);
+
+   // console.log("Ano: " + date.getFullYear(), "/ Mês: " + date.getUTCMonth());
+
+    
+
+    var primeiroDia = new Date(date.getUTCFullYear(), date.getUTCMonth(), 1);
+    var ultimoDia = new Date(date.getUTCFullYear(), date.getUTCMonth() + 1, 0);  
+    //console.log("primeiroDia: " + primeiroDia + "- ultimoDia: " + ultimoDia);
+
+  await repository.findById(id, primeiroDia, ultimoDia)
+    .then((veiculo) => {       
+      return res.json({
+        erro: false,
+        veiculo: veiculo        
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Nenhum veículo encontrado!",
+      });
+    });
+};
+
+async function getVeiculo1(req, res) {
+  const { id } = req.params;  
+
+  //await repository.findById1(id)
+  await repository.findOneVeiculoId(id)
     .then((veiculo) => {       
       return res.json({
         erro: false,
@@ -132,5 +162,6 @@ async function setVeiculoId(req, res) {
 module.exports = {AddVeiculo,
                   getVeiculos,
                   getVeiculo,
+                  getVeiculo1,
                   setVeiculoId,                 
                   };
