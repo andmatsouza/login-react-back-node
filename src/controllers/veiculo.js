@@ -6,22 +6,14 @@ async function AddVeiculo(req, res) {
   var dados = req.body;
 
   const schema = yup.object().shape({   
-    
-    placa: yup
-      .string("Erro: Necessário preencher o campo placa!")
-      .required("Erro: Necessário preencher o campo placa!"),
-    renavam: yup
-      .string("Erro: Necessário preencher o campo renavam!")
-      .required("Erro: Necessário preencher o campo renavam!"),
-    ano_fabricacao: yup
-      .string("Erro: Necessário preencher o campo ano de fabricação!")
-      .required("Erro: Necessário preencher o campo ano de fabricação!"),
-    fabricanteId: yup
-      .string("Erro: Necessário preencher o campo nome do fabricante!")
-      .required("Erro: Necessário preencher o campo nome do fabricante!"),
-    modeloId: yup
-      .string("Erro: Necessário preencher o campo modelo do fabricante!")
-      .required("Erro: Necessário preencher o campo modelo do fabricante!"),
+
+      ano_fabricacao: yup.date().typeError("Erro: Necessário preencher o campo ano de fabricação!").required(),             
+      modeloId: yup.number().typeError("Erro: Necessário preencher o campo modelo!").required().positive("O campo modelo deve ser positivo.").integer("O campo modelo deve ser um número inteiro."),
+      fabricanteId: yup.number().typeError("Erro: Necessário preencher o campo fabricante!").required().positive("O campo fabricante deve ser positivo.").integer("O campo fabricante deve ser um número inteiro."), 
+      status: yup.number().typeError("Erro: Necessário preencher o campo Ativo!").required().positive("O campo ativo deve ser positivo.").integer("O campo ativo deve ser um número inteiro."),      
+      renavam: yup.number().typeError("Erro: Necessário preencher o campo renavam!").required().positive('O campo renavam deve ser positivo').integer("O campo renavam deve ser um número inteiro."),
+      placa: yup.string().required("Erro: Necessário preencher o campo nome da placa!"),    
+   
   });
 
   try {

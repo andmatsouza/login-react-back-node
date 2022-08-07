@@ -12,29 +12,16 @@ const repository = require("../models/AbastecimentoRepository");
 async function AddAbastecimento(req, res) {
   var dados = req.body;
 
-  const schema = yup.object().shape({   
+  const schema = yup.object().shape({ 
     
-    data_abastecimento: yup
-      .string("Erro: Necessário preencher o campo nome do combustível!")
-      .required("Erro: Necessário preencher o campo nome do combustível!"),
-    qtd_litro: yup
-      .string("Erro: Necessário preencher o campo litro!")
-      .required("Erro: Necessário preencher o campo litro!"),
-    valor_litro: yup
-      .string("Erro: Necessário preencher o campo preço do litro!")
-      .required("Erro: Necessário preencher o campo preço do litro!"),
-    odometro_km: yup
-      .string("Erro: Necessário preencher o campo Km!")
-      .required("Erro: Necessário preencher o campo Km!"),
-    veiculoId: yup
-      .string("Erro: Necessário preencher o campo veículo!")
-      .required("Erro: Necessário preencher o campo veículo!"),
-    postoId: yup
-      .string("Erro: Necessário preencher o campo posto!")
-      .required("Erro: Necessário preencher o campo posto!"),
-    combustiveiId: yup
-      .string("Erro: Necessário preencher o campo combustível2!")
-      .required("Erro: Necessário preencher o campo combustível2!"),
+      odometro_km: yup.number().typeError('Digite a valor p odômetro Km').required().positive("O campo odômetro Km deve ser positivo."),      
+      valor_litro: yup.number().typeError('Digite o valor do litro').required().positive("O campo valor do litro deve ser positivo."),
+      qtd_litro: yup.number().typeError('O campo Qde Litros deve ser um número').required().positive('O campo qtd litros deve ser positivo').integer("O campo qtd litros deve ser um número inteiro."),
+      combustiveiId: yup.number().typeError('Selecione o Combustível').required().positive("O campo combustível deve ser positivo.").integer("O campo combustível deve ser um número inteiro."),
+      veiculoId: yup.number().typeError('Selecione um Veiculo').required("O campo veículo é obrigatório.").positive("O campo veículo deve ser positivo.").integer("O campo veículo deve ser um número inteiro."),
+      postoId: yup.number().typeError('Selecione um Posto').required("O campo posto é obrigatório.").positive("O campo posto deve ser positivo.").integer("O campo posto deve ser um número inteiro."),
+      data_abastecimento: yup.date().typeError('Digite uma Data Abastecimento válida').required(),   
+   
   });
 
   try {
