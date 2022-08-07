@@ -30,7 +30,7 @@ function findById(id,primeiroDia,ultimoDia) {
       }
       ],
       
-      order: [[Abastecimeto, 'data_abastecimento', 'DESC']]  
+      order: [[Abastecimeto, 'data_abastecimento', 'ASC']]  
   
   }); 
 
@@ -41,7 +41,7 @@ function findById(id,primeiroDia,ultimoDia) {
 
 function findById1(id) {
 
-  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}], order: [[Abastecimeto, 'data_abastecimento', 'DESC']]  });
+  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}], order: [[Abastecimeto, 'data_abastecimento', 'ASC']]  });
   //return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto}] });  
 }
 
