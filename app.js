@@ -8,6 +8,9 @@ const veiculoRouter = require('./src/routes/veiculo');
 const postoRouter = require('./src/routes/posto');
 const combustivelRouter = require('./src/routes/combustivel');
 const abastecimentoRouter = require('./src/routes/abastecimento');
+const oficinaRouter = require('./src/routes/oficina');
+const servicoRouter = require('./src/routes/servico');
+const manutencaoRouter = require('./src/routes/manutencao');
 
 const app = express();
 
@@ -26,7 +29,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use([userRouter,fabricanteRouter,modeloRouter,veiculoRouter, postoRouter, combustivelRouter,abastecimentoRouter]);
+app.use([userRouter,fabricanteRouter,modeloRouter,veiculoRouter, postoRouter, combustivelRouter,abastecimentoRouter, oficinaRouter, servicoRouter, manutencaoRouter]);
 
 
 
