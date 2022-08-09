@@ -34,8 +34,13 @@ function findOneFabricanteId(nome_fabricante, id) {
   });
 }*/
 
-function findOnePosto(id) {
-  return Posto.findOne({ where: {id: id}});
+function findOnePosto(nomePosto) {
+  return Posto.findOne({
+    attributes: ["nome_posto"],
+    where: {
+      nome_posto: nomePosto,
+    },
+  });
 }
 
 
