@@ -5,6 +5,9 @@ const Fabricante = require("./Fabricante");
 const Abastecimeto = require("./Abastecimento");
 const Posto = require("./Posto");
 const Combustivel = require("./Combustivel");
+const Manutencao = require("./Manutencao");
+const Oficina = require("./Oficina");
+const Servico = require("./Servico");
 
 function countVeiculo() { return Veiculo.count(); };
 
@@ -19,7 +22,7 @@ function findAll() {
   })
 };
 
-function findById(id,primeiroDia,ultimoDia) {
+/*function findById(id,primeiroDia,ultimoDia) {
 
   return Veiculo.findByPk(id, {
     include: [ 
@@ -32,7 +35,25 @@ function findById(id,primeiroDia,ultimoDia) {
       
       order: [[Abastecimeto, 'data_abastecimento', 'ASC']]  
   
-  }); 
+  }); */
+
+  function findById(id,primeiroDia,ultimoDia) {
+
+    return Veiculo.findByPk(id, {
+      include: [ 
+        {model:Fabricante}, 
+        {model: Modelo}, 
+        {model: Abastecimeto,  
+          where: {"data_abastecimento": {[Op.between]: [primeiroDia, ultimoDia]}}, include: [Posto, Combustivel]
+        },
+        {model: Manutencao,  
+          where: {"data_mnt": {[Op.between]: [primeiroDia, ultimoDia]}}, include: [Oficina, Servico]
+        }
+        ],
+        
+        order: [[Abastecimeto, 'data_abastecimento', 'ASC'], [Manutencao, 'data_mnt', 'ASC']]  
+    
+    }); 
 
 
   //return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}], order: [[Abastecimeto, 'data_abastecimento', 'DESC']]  });
@@ -41,7 +62,8 @@ function findById(id,primeiroDia,ultimoDia) {
 
 function findById1(id) {
 
-  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}], order: [[Abastecimeto, 'data_abastecimento', 'ASC']]  });
+  return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}, {model: Manutencao, include: [Oficina, Servico]}], order: [[Abastecimeto, 'data_abastecimento', 'ASC']]  });
+  //return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto, include: [Posto, Combustivel]}], order: [[Abastecimeto, 'data_abastecimento', 'ASC']]  });
   //return Veiculo.findByPk(id, {include: [ {model:Fabricante}, {model: Modelo}, {model: Abastecimeto}] });  
 }
 

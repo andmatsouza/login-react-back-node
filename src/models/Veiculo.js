@@ -3,6 +3,7 @@ const db = require("./db");
 const Fabricante = require("./Fabricante");
 const Modelo = require("./Modelo");
 const Abastecimento = require("./Abastecimento");
+const Manutencao = require("./Manutencao");
 
 const Veiculo = db.define('veiculos', {
   id: {
@@ -49,6 +50,15 @@ Veiculo.hasMany(Abastecimento, {
 });
 
 Abastecimento.belongsTo(Veiculo);
+
+Veiculo.hasMany(Manutencao, {
+  constraints: true,
+  foreignKey: 'veiculoId'
+});
+
+Manutencao.belongsTo(Veiculo);
+
+
 
 //Veiculo.sync();
 //Veiculo.sync({ alter: true });
