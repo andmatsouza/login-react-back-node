@@ -11,6 +11,7 @@ const abastecimentoRouter = require('./src/routes/abastecimento');
 const oficinaRouter = require('./src/routes/oficina');
 const servicoRouter = require('./src/routes/servico');
 const manutencaoRouter = require('./src/routes/manutencao');
+const oleoRouter = require('./src/routes/oleo');
 
 const app = express();
 
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use([userRouter,fabricanteRouter,modeloRouter,veiculoRouter, postoRouter, combustivelRouter,abastecimentoRouter, oficinaRouter, servicoRouter, manutencaoRouter]);
+app.use([userRouter,fabricanteRouter,modeloRouter,veiculoRouter, postoRouter, combustivelRouter,abastecimentoRouter, oficinaRouter, servicoRouter, manutencaoRouter, oleoRouter]);
 
 
 
