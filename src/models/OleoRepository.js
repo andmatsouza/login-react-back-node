@@ -3,18 +3,15 @@ const Oleo = require("./Oleo");
 
 function countOleo() { return Oleo.count(); };
 
-function findAll(pages) {
-  const { page = 1 } = pages;
-  const limit = 7;  
+function findAll() {
+ 
 
   return Oleo.findAll({
     where: {
       status: '1'      
   },
     attributes: ["id", "nome_oleo", "km_oleo"],
-    order: [["id", "DESC"]],
-    offset: Number(page * limit - limit),
-    limit: limit,
+    order: [["id", "DESC"]],   
   }) 
 };
 

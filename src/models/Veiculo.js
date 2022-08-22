@@ -4,6 +4,7 @@ const Fabricante = require("./Fabricante");
 const Modelo = require("./Modelo");
 const Abastecimento = require("./Abastecimento");
 const Manutencao = require("./Manutencao");
+const TrocaOleo = require("./TrocaOleo");
 
 const Veiculo = db.define('veiculos', {
   id: {
@@ -57,6 +58,13 @@ Veiculo.hasMany(Manutencao, {
 });
 
 Manutencao.belongsTo(Veiculo);
+
+Veiculo.hasMany(TrocaOleo, {
+  constraints: true,
+  foreignKey: 'veiculoId'
+});
+
+TrocaOleo.belongsTo(Veiculo);
 
 
 

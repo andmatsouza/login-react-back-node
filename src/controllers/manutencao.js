@@ -14,7 +14,7 @@ async function AddManutencao(req, res) {
 
   const schema = yup.object().shape({    
      
-      valor_mnt: yup.number().typeError('Digite o valor da manutenção').required().positive("O campo combustível deve ser positivo.").integer("O campo combustível deve ser um número inteiro."),
+      valor_mnt: yup.number().typeError('Digite o valor da manutenção').required().positive("O campo valor da manutenção deve ser positivo."),
       desc_mnt: yup.string("Erro: Necessário preencher o campo descrição da manutenção!").required("Erro: Necessário preencher o campo descrição da manutenção!"),      
       servicoId: yup.number().typeError('Selecione um Posto').required("O campo posto é obrigatório.").positive("O campo posto deve ser positivo.").integer("O campo posto deve ser um número inteiro."),
       oficinaId: yup.number().typeError('Selecione um Posto').required("O campo posto é obrigatório.").positive("O campo posto deve ser positivo.").integer("O campo posto deve ser um número inteiro."),

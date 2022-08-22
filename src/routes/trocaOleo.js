@@ -1,12 +1,12 @@
 const { Router } = require("express");
-const oleoController = require("../controllers/oleo");
+const trocaOleoController = require("../controllers/trocaOleo");
 
 const { eAdmin } = require("../middlewares/auth");
 
 const router = Router();
 
-router.post("/oleo", eAdmin, oleoController.AddOleo);
-router.get("/oleos", eAdmin, oleoController.getOleos);
+router.post("/trocaoleo", eAdmin, trocaOleoController.AddTrocaOleo);
+//router.get("/fabricantes/:page", eAdmin, fabricanteController.getFabricantes);
 //router.get("/fabricante/:id", eAdmin, fabricanteController.getFabricante);
 //router.put("/fabricante", eAdmin, fabricanteController.setFabricante);
 //router.put("/fabricante/:id", eAdmin, fabricanteController.setFabricanteId);   
