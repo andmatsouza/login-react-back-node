@@ -86,6 +86,18 @@ async function getVeiculosTime(req, res) {
   const limit = 7;
   let lastPage = 1;
 
+  console.log("Datainicio: " + dtInicio);
+    console.log("Datafinal: " + dtFinal); 
+
+
+  const date = new Date(dtFinal + "-" + dtInicio);
+    //console.log("Data: " + date);
+    //console.log("Ano: " + date.getFullYear(), "/ Mês: " + date.getUTCMonth());    
+
+    var primeiroDia = new Date(date.getUTCFullYear(), date.getUTCMonth(), 1);
+    var ultimoDia = new Date(date.getUTCFullYear(), date.getUTCMonth() + 1, 0);  
+   //console.log("primeiroDia: " + primeiroDia + "- ultimoDia: " + ultimoDia);
+
   const countVeiculo = await repository.countVeiculo();
   if (countVeiculo === null) {
     return res.status(400).json({
@@ -96,7 +108,7 @@ async function getVeiculosTime(req, res) {
     lastPage = Math.ceil(countVeiculo / limit);
   }  
 
-  await repository.findAllTime(dtInicio, dtFinal)
+  await repository.findAllTime(primeiroDia, ultimoDia)
     .then((veiculos) => {
       var totVeiculosAbastecimentos = [];
       var veiculoAbast = {

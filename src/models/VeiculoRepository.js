@@ -38,10 +38,11 @@ function findAllTime(dateInicial, dateFinal) {
       { model: Modelo},
       {model: Abastecimeto, attributes: ['id', 'data_abastecimento', 'qtd_litro', 'valor_litro', 'odometro_km',
       ],   
-          where: {"data_abastecimento": {[Op.between]: [dateInicial, dateFinal]}},          
-        }    
+          where: {"data_abastecimento": {[Op.between]: [dateInicial, dateFinal]}},
+          required: false,                  
+        },        
     ],    
-    order: [[Abastecimeto, 'data_abastecimento', 'ASC'],],
+    order: [['id', 'ASC'],[Abastecimeto, 'data_abastecimento', 'ASC'],],
   })
 };
 
