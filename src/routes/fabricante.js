@@ -5,10 +5,10 @@ const { eAdmin } = require("../middlewares/auth");
 
 const router = Router();
 
-router.post("/fabricante", eAdmin, fabricanteController.AddFabricante);
-router.get("/fabricantes/:page", eAdmin, fabricanteController.getFabricantes);
-router.get("/fabricante/:id", eAdmin, fabricanteController.getFabricante);
-router.put("/fabricante", eAdmin, fabricanteController.setFabricante);
-router.put("/fabricante/:id", eAdmin, fabricanteController.setFabricanteId);   
+router.post("/api/fabricante", eAdmin, fabricanteController.AddFabricante);
+router.get("/api/fabricantes/:page", eAdmin, fabricanteController.getFabricantes);
+router.get("/api/fabricante/:id", eAdmin, fabricanteController.getFabricante);
+router.put("/api/fabricante", eAdmin, fabricanteController.setFabricante);
+router.put("/api/fabricante/:id", eAdmin, fabricanteController.setFabricanteId);   
 
 module.exports = router;

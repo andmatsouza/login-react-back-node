@@ -5,8 +5,8 @@ const { eAdmin } = require("../middlewares/auth");
 
 const router = Router();
 
-router.post("/combustivel", eAdmin, combustivelController.AddCombustivel);
-router.get("/combustiveis", eAdmin, combustivelController.getCombustiveis);
+router.post("/api/combustivel", eAdmin, combustivelController.AddCombustivel);
+router.get("/api/combustiveis", eAdmin, combustivelController.getCombustiveis);
 //router.get("/fabricante/:id", eAdmin, fabricanteController.getFabricante);
 //router.put("/fabricante", eAdmin, fabricanteController.setFabricante);
 //router.put("/fabricante/:id", eAdmin, fabricanteController.setFabricanteId);   

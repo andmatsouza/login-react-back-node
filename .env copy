@@ -1,0 +1,15 @@
+SECRET = 'b3yDybHk9nTjTMyqVEoaRs'
+DB_HOST=localhost
+DB=enviostelelimp_apitelelimp
+DB_USER=enviostelelimp_dbapitele
+DB_PASS=Mka04097#
+
+PORT=3001
+
+EMAIL_FROM_PASS="noreplay@celker.com.br"
+EMAIL_HOST="smtp.mailtrap.io"
+EMAIL_PORT=2525
+EMAIL_USER="8732d89c68298b"
+EMAIL_PASSWORD="9d272330d4ac07"
+
+URL_IMG="http://localhost:3001"

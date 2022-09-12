@@ -5,11 +5,11 @@ const { eAdmin } = require("../middlewares/auth");
 
 const router = Router();
 
-router.post("/veiculo", eAdmin, veiculoController.AddVeiculo);
-router.get("/veiculos/:page", eAdmin, veiculoController.getVeiculos);
-router.get("/veiculo/:id/:mes/:ano", eAdmin, veiculoController.getVeiculo);
-router.get("/veiculo-abast/:dtInicio/:dtFinal", eAdmin, veiculoController.getVeiculosTime);
-router.get("/veiculo/:id", eAdmin, veiculoController.getVeiculo1);
-router.put("/veiculo/:id", eAdmin, veiculoController.setVeiculoId); 
+router.post("/api/veiculo", eAdmin, veiculoController.AddVeiculo);
+router.get("/api/veiculos/:page", eAdmin, veiculoController.getVeiculos);
+router.get("/api/veiculo/:id/:mes/:ano", eAdmin, veiculoController.getVeiculo);
+router.get("/api/veiculo-abast/:dtInicio/:dtFinal", eAdmin, veiculoController.getVeiculosTime);
+router.get("/api/veiculo/:id", eAdmin, veiculoController.getVeiculo1);
+router.put("/api/veiculo/:id", eAdmin, veiculoController.setVeiculoId); 
 
 module.exports = router;
