@@ -190,6 +190,115 @@ async function getVeiculosTime(req, res) {
     });
 };
 
+async function getVeiculosMntTime(req, res) {
+  const { page = 1, dtInicio, dtFinal } = req.params;
+  const limit = 7;
+  let lastPage = 1;
+
+  console.log("Datainicio: " + dtInicio);
+    console.log("Datafinal: " + dtFinal); 
+
+
+  const date = new Date(dtFinal + "-" + dtInicio);
+    //console.log("Data: " + date);
+    //console.log("Ano: " + date.getFullYear(), "/ Mês: " + date.getUTCMonth());    
+
+    var primeiroDia = new Date(date.getUTCFullYear(), date.getUTCMonth(), 1);
+    var ultimoDia = new Date(date.getUTCFullYear(), date.getUTCMonth() + 1, 0);  
+   //console.log("primeiroDia: " + primeiroDia + "- ultimoDia: " + ultimoDia);
+
+  const countVeiculo = await repository.countVeiculo();
+  if (countVeiculo === null) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: "Erro: Nenhum veículo encontrado!",
+    });
+  } else {
+    lastPage = Math.ceil(countVeiculo / limit);
+  }  
+
+  await repository.findAllMntTime(primeiroDia, ultimoDia)
+    .then((veiculos) => {
+     {/*} var totVeiculosAbastecimentos = [];
+      var veiculoAbast = {
+        placa: "",
+        fabricante: "",
+        totLitro: 0,
+        totValorAbast: 0,
+        totOdometro: 0
+      };
+      var abst = 0;
+      var valorAbst = 0;
+      var valorAbastParcial = 0;      
+      var odometroInicialMes = 0;
+      var odometroTotalMes = 0;
+      var valorParcial = 0;
+      var ultimoAbastPeriodo = 0;
+      var tam = 0;      
+
+      for (var i = 0; i < countVeiculo; i++) {        
+        tam = veiculos[i].abastecimentos.length;
+        veiculos[i].abastecimentos.map((abastecimento, indice) => {
+           
+          if (indice === 0) {
+            odometroInicialMes = abastecimento.odometro_km;
+          }
+          odometroTotalMes = odometroTotalMes + abastecimento.odometro_km;
+          valorParcial = odometroTotalMes - abastecimento.odometro_km;
+
+          if (indice === tam - 1) {
+            ultimoAbastPeriodo = abastecimento.qtd_litro;
+          }
+          
+          abst = abst + abastecimento.qtd_litro;
+          valorAbst = valorAbst + (abastecimento.qtd_litro * abastecimento.valor_litro) ;
+          valorAbastParcial = valorAbst - (abastecimento.qtd_litro * abastecimento.valor_litro);
+        });
+  
+      
+        veiculoAbast.placa = veiculos[i].placa;
+        veiculoAbast.fabricante = veiculos[i].fabricante.nome_fabricante;       
+        veiculoAbast.totLitro = abst - ultimoAbastPeriodo;
+        veiculoAbast.totValorAbast = valorAbastParcial;
+
+        veiculoAbast.totOdometro = (odometroTotalMes - odometroInicialMes) - valorParcial;
+  
+        totVeiculosAbastecimentos[i] = veiculoAbast;
+        
+
+        veiculoAbast = {
+          placa: "",
+          fabricante: "",
+          totLitro: 0,
+          totValorAbast: 0,
+          totOdometro: 0
+        }
+        valorAbst = 0;
+        valorAbastParcial = 0;
+        odometroInicialMes = 0;
+        odometroTotalMes = 0;
+        valorParcial = 0;
+        ultimoAbastPeriodo = 0;
+        abst = 0;       
+      }*/}    
+
+      return res.json({
+        erro: false,
+        veiculos,
+        countVeiculo,
+        lastPage,
+       // abst,
+       // totVeiculosAbastecimentos
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Nenhum veículo encontrado!",
+      });
+    });
+};
+
 async function getVeiculo(req, res) {
   const { id, mes, ano } = req.params;
 
@@ -297,5 +406,6 @@ module.exports = {AddVeiculo,
                   getVeiculo,
                   getVeiculo1,
                   setVeiculoId,
-                  getVeiculosTime,                 
+                  getVeiculosTime, 
+                  getVeiculosMntTime,                
                   };

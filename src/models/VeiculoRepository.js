@@ -46,6 +46,24 @@ function findAllTime(dateInicial, dateFinal) {
   })
 };
 
+function findAllMntTime(dateInicial, dateFinal) {
+
+  return Veiculo.findAll({
+    where: {
+      status: '1'      
+  },    
+    include: [
+      { model:Fabricante}, 
+      { model: Modelo},
+      {model: Manutencao, attributes: ['id', 'data_mnt', 'desc_mnt', 'valor_mnt',
+      ],   
+          where: {"data_mnt": {[Op.between]: [dateInicial, dateFinal]}},
+          required: false,                  
+        },        
+    ],    
+    order: [['id', 'ASC'],[Manutencao, 'data_mnt', 'ASC'],],
+  })
+};
 
 
 
@@ -160,4 +178,4 @@ function remove(id) {
   return Modelo.destroy({ where: { id } });   
 }*/
 
-module.exports = {countVeiculo, findAll, findAllTime, findByIdMntOne, findByIdMntTwo, findByIdMntThree,findById1, findOneVeiculoId, findOneVeiculo, add,};
+module.exports = {countVeiculo, findAll, findAllTime, findAllMntTime, findByIdMntOne, findByIdMntTwo, findByIdMntThree,findById1, findOneVeiculoId, findOneVeiculo, add,};
