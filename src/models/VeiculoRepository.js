@@ -55,13 +55,14 @@ function findAllMntTime(dateInicial, dateFinal) {
     include: [
       { model:Fabricante}, 
       { model: Modelo},
-      {model: Manutencao, attributes: ['id', 'data_mnt', 'desc_mnt', 'valor_mnt',
+      {model: Manutencao, attributes: ['id', 'data_mnt', 'desc_mnt', 'valor_mnt', 'servicoId'
       ],   
           where: {"data_mnt": {[Op.between]: [dateInicial, dateFinal]}},
+          include: [Servico],
           required: false,                  
         },        
     ],    
-    order: [['id', 'ASC'],[Manutencao, 'data_mnt', 'ASC'],],
+    order: [['id', 'ASC'],[Manutencao, 'servicoId', 'ASC'],],
   })
 };
 
