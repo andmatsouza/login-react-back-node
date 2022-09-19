@@ -219,6 +219,70 @@ async function getVeiculosMntTime(req, res) {
 
   await repository.findAllMntTime(primeiroDia, ultimoDia)
     .then((veiculos) => {
+      var totVeiculosManutencoes = [];
+      var veiculoMnt = {
+        placa: "",
+        fabricante: "",
+        valorTotLatariaPintura: 0,
+        valorTotMecanica: 0,
+        valorTotPneus: 0,
+        valorTotLavagem: 0,
+        valorTotalMnt: 0,
+      };
+
+      var qtdMntVeiculo = 0;
+      var totLatPin = 0;
+      var totMec = 0;
+      var totPneu = 0;
+      var totLav = 0;
+    
+      for (var i = 0; i < countVeiculo; i++) { 
+       // qtdMntVeiculo = veiculos[i].manutencoes.length;
+        veiculos[i].manutencoes.map((manutencao, indice) => {
+
+          switch (manutencao.servico.nome_servico) {
+            case 'LATARIA E PINTURA':
+              totLatPin = totLatPin + manutencao.valor_mnt;
+              break;
+            case 'MECÂNICA':
+              totMec = totMec + manutencao.valor_mnt;
+              break;
+            case 'PNEUS':
+              totPneu = totPneu + manutencao.valor_mnt;
+              break;
+            case 'LAVAGEM VEÍCULO':
+              totLav = totLav + manutencao.valor_mnt;
+              break;           
+          }          
+        });
+
+          veiculoMnt.placa = veiculos[i].placa;
+          veiculoMnt.fabricante = veiculos[i].fabricante.nome_fabricante;
+          veiculoMnt.valorTotLatariaPintura = totLatPin;
+          veiculoMnt.valorTotMecanica = totMec;
+          veiculoMnt.valorTotPneus = totPneu;
+          veiculoMnt.valorTotLavagem = totLav;
+          veiculoMnt.valorTotalMnt = (totLatPin+totMec+totPneu+totLav);
+
+          totVeiculosManutencoes[i] = veiculoMnt;
+
+          veiculoMnt = {
+            placa: "",
+            fabricante: "",
+            valorTotLatariaPintura: 0,
+            valorTotMecanica: 0,
+            valorTotPneus: 0,
+            valorTotLavagem: 0,
+            valorTotalMnt: 0,
+          };
+
+          totLatPin = 0;
+          totMec = 0;
+          totPneu = 0;
+          totLav = 0;
+
+      }
+
      {/*} var totVeiculosAbastecimentos = [];
       var veiculoAbast = {
         placa: "",
@@ -288,7 +352,7 @@ async function getVeiculosMntTime(req, res) {
         countVeiculo,
         lastPage,
        // abst,
-       // totVeiculosAbastecimentos
+        totVeiculosManutencoes
       });
     })
     .catch(() => {
