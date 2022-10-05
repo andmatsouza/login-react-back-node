@@ -156,7 +156,7 @@ function findById1(id) {
 
 
 function findOneVeiculoId(id) {
-  return Veiculo.findOne({ include:[{model:Fabricante}], where: {id: id}});
+  return Veiculo.findOne({ include:[{model:Fabricante}, {model:Abastecimeto} ], where: {id: id}, order: [[Abastecimeto, 'odometro_km', 'ASC']], });
 }
 
 function findOneVeiculo(placa) {

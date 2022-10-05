@@ -387,12 +387,14 @@ async function getVeiculo(req, res) {
     var qtdLitroFinal = 0;
     var valorParcial = 0;
     var valorParcialLitro = 0;
+    var valorUltimoOdometro = 0;
     abst.map((val, indice) => {
     if (indice === 0) {
       odometroInicialMes = val.odometro_km;
     }
     if (indice === tam - 1) {
       qtdLitroFinal = val.qtd_litro;
+      valorUltimoOdometro = val.odometro_km;
     }
     odometroTotalMes = odometroTotalMes + val.odometro_km;
     valorParcial = odometroTotalMes - val.odometro_km;
@@ -413,7 +415,8 @@ async function getVeiculo(req, res) {
         veiculo: veiculo,
         valorParcialLitro: valorParcialLitro,
         kmRodadoMes: kmRodadoMes,
-        mediaKmMesPorLitro: mediaKmMesPorLitro,                      
+        mediaKmMesPorLitro: mediaKmMesPorLitro,
+        valorUltimoOdometro: valorUltimoOdometro,                 
       });
     })
     .catch(() => {
@@ -429,10 +432,21 @@ async function getVeiculo1(req, res) {
 
   //await repository.findById1(id)
   await repository.findOneVeiculoId(id)
-    .then((veiculo) => {       
+    .then((veiculo) => { 
+      const abst = veiculo.abastecimentos;
+      var tam = abst.length; 
+      var valorUltimoOdometro = 0;
+
+      abst.map((val, indice) => {        
+        if (indice === tam - 1) {         
+          valorUltimoOdometro = val.odometro_km;
+        }       
+      });      
+
       return res.json({
         erro: false,
-        veiculo: veiculo        
+        veiculo: veiculo,
+        valorUltimoOdometro: valorUltimoOdometro,        
       });
     })
     .catch(() => {
