@@ -190,6 +190,134 @@ async function getVeiculosTime(req, res) {
     });
 };
 
+
+
+async function getVeiculosTrocaOleo(req, res) {
+  const { page = 1 } = req.params;
+  const limit = 7;
+  let lastPage = 1;
+
+  const countVeiculo = await repository.countVeiculo();
+  if (countVeiculo === null) {
+    return res.status(400).json({
+      erro: true,
+      mensagem: "Erro: Nenhum veículo encontrado!",
+    });
+  } else {
+    lastPage = Math.ceil(countVeiculo / limit);
+  }
+
+  await repository.findAllTrocaOleo()
+    .then((veiculos) => {
+      var totVeiculosTrocaOleo = [];
+      var veiculoTrocaOleo = {
+        placa: "",
+        fabricante: "",
+        dtUltimaTroca: "",
+        filtroOleo: 0,
+        filtroCombustivel: 0,
+        valorUltimaTroca: 0,
+        odometroUltimaTroca: 0,
+        odometroProximaTroca: 0,
+        odometroAtualVeiculo: 0,
+      };
+
+      var odProximaTrocaOleo = 0;
+      var odUltimaTrocaOleo = 0;
+      var odAtualVeiculo = 0;
+      var dtTroca = "";
+      var valorTroca = 0;
+      var filComb = 0;
+      var filOleo = 0;
+      var tamTrocaOleo = 0;
+      var tamAbastecimento = 0; 
+
+
+
+      for (var i = 0; i < countVeiculo; i++) {  
+        
+        
+        tamAbastecimento = veiculos[i].abastecimentos.length;
+        veiculos[i].abastecimentos.map((abastecimento, indice) => {        
+
+          if (indice === tamAbastecimento - 1) {
+            odAtualVeiculo = abastecimento.odometro_km;            
+          }          
+          
+        });
+
+
+
+
+        tamTrocaOleo = veiculos[i].trocaoleos.length;
+        veiculos[i].trocaoleos.map((trocaOleo, indice) => {        
+          
+
+          if (indice === tamTrocaOleo - 1) {
+            odUltimaTrocaOleo = trocaOleo.odometro_atual;
+            odProximaTrocaOleo = trocaOleo.odometro_troca;
+            dtTroca = trocaOleo.data_troca;
+            valorTroca = trocaOleo.valor_troca;
+            filComb = trocaOleo.filtro_combustivel;
+            filOleo = trocaOleo.filtro_oleo;
+          }          
+          
+        });
+  
+      
+        veiculoTrocaOleo.placa = veiculos[i].placa;
+        veiculoTrocaOleo.fabricante = veiculos[i].fabricante.nome_fabricante;       
+        veiculoTrocaOleo.odometroUltimaTroca = odUltimaTrocaOleo;
+        veiculoTrocaOleo.odometroProximaTroca = odProximaTrocaOleo;
+        veiculoTrocaOleo.dtUltimaTroca = dtTroca;
+        veiculoTrocaOleo.valorUltimaTroca = valorTroca;
+        veiculoTrocaOleo.filtroCombustivel = filComb;
+        veiculoTrocaOleo.filtroOleo = filOleo;
+        veiculoTrocaOleo.odometroAtualVeiculo = odAtualVeiculo;
+
+        
+  
+        totVeiculosTrocaOleo[i] = veiculoTrocaOleo;
+        
+
+        veiculoTrocaOleo = {
+          placa: "",
+          fabricante: "",
+          dtUltimaTroca: "",
+          filtroOleo: 0,
+          filtroCombustivel: 0,
+          valorUltimaTroca: 0,
+          odometroUltimaTroca: 0,
+          odometroProximaTroca: 0,
+          odometroAtualVeiculo: 0,
+        }
+
+
+        odProximaTrocaOleo = 0;
+        odUltimaTrocaOleo = 0;
+        odAtualVeiculo = 0;
+        dtTroca = "";
+        valorTroca = 0;
+        filComb = 0;
+        filOleo = 0;   
+      }
+
+      return res.json({
+        erro: false,
+        veiculos,
+        totVeiculosTrocaOleo,
+        countVeiculo,
+        lastPage,
+      });
+    })
+    .catch(() => {
+      return res.status(400).json({
+        erro: true,
+        mensagem: "Erro: Nenhum veículo encontrado!",
+      });
+    });
+};
+
 async function getVeiculosMntTime(req, res) {
   const { page = 1, dtInicio, dtFinal } = req.params;
   const limit = 7;
@@ -485,5 +613,6 @@ module.exports = {AddVeiculo,
                   getVeiculo1,
                   setVeiculoId,
                   getVeiculosTime, 
-                  getVeiculosMntTime,                
+                  getVeiculosMntTime,
+                  getVeiculosTrocaOleo,               
                   };

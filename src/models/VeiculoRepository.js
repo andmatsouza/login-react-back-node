@@ -67,6 +67,30 @@ function findAllMntTime(dateInicial, dateFinal) {
 };
 
 
+function findAllTrocaOleo() {
+
+  return Veiculo.findAll({
+    where: {
+      status: '1'      
+  },    
+    include: [
+      { model:Fabricante}, 
+      { model: Modelo},
+      {model: Abastecimeto, attributes: ['id', 'data_abastecimento', 'odometro_km',
+      ],         
+          required: false,                  
+        },
+      {model: TrocaOleo, attributes: ['id', 'data_troca', 'filtro_oleo', 'filtro_combustivel', 'valor_troca', 'odometro_atual', 'odometro_troca', 'oficinaId', 'oleoId', 
+      ],          
+          include: [Oficina, Oleo],
+          required: false,                  
+        },        
+    ],    
+    order: [['id', 'ASC'],[TrocaOleo, 'id', 'ASC'],],
+  })
+};
+
+
 
 function findAllold() {
 
@@ -179,4 +203,4 @@ function remove(id) {
   return Modelo.destroy({ where: { id } });   
 }*/
 
-module.exports = {countVeiculo, findAll, findAllTime, findAllMntTime, findByIdMntOne, findByIdMntTwo, findByIdMntThree,findById1, findOneVeiculoId, findOneVeiculo, add,};
+module.exports = {countVeiculo, findAll, findAllTime, findAllMntTime, findAllTrocaOleo, findByIdMntOne, findByIdMntTwo, findByIdMntThree,findById1, findOneVeiculoId, findOneVeiculo, add,};
